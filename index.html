@@ -4,7 +4,193 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nory Délano - Psicóloga</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            /* New Pastel Palette */
+            --bg-color: #FEFAE0;
+            /* Pastel Yellow / Cream */
+            --text-color: #555555;
+            /* Standard Grey as requested */
+            --link-color: #333333;
+            /* Darker Grey for contrast */
+            --accent-color: #888888;
+            /* Light Grey */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            /* Add padding around the whole page */
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            /* Space between Left (Name/Menu) and Right (Content) */
+            align-items: flex-start;
+        }
+        /* Left Column: Name and Menu */
+        .sidebar {
+            flex: 1;
+            max-width: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /* Align left */
+            text-align: left;
+        }
+        .name {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            letter-spacing: -0.03em;
+            color: var(--link-color);
+            line-height: 1;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-top: 0;
+            margin-bottom: 3rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .menu-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding-left: 0;
+        }
+        .menu-link:hover,
+        .menu-link.active {
+            color: #000;
+            font-weight: 700;
+            transform: translateX(5px);
+        }
+        /* Right Column: Content Display */
+        .content-display {
+            flex: 1;
+            max-width: 500px;
+            display: flex;
+            /* Flex to center content vertically if needed, or just block */
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 1rem;
+            /* Align visually with menu or name */
+            min-height: 400px;
+            position: relative;
+            /* Ensure it stays in flow */
+        }
+        .content-section {
+            display: none;
+            /* Hidden by default */
+            opacity: 0;
+            animation: fadeIn 0.4s forwards;
+            text-align: left;
+            /* Content aligned left within right column */
+        }
+        .content-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Contact Section */
+        .profile-photo-placeholder {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 2rem;
+        }
+        .profile-svg {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+        .contact-details {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        .action-link {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+        .action-link:hover {
+            border-bottom-color: var(--link-color);
+        }
+        /* Maps */
+        .location-card {
+            background: rgba(255, 255, 255, 0.5);
+            /* Semi-transparent to blend with yellow */
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        .location-card h3 {
+            margin-top: 0;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--accent-color);
+        }
+        .map-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            margin-top: 0.5rem;
+        }
+        /* Terapia */
+        .description-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.5rem;
+            }
+            .main-container,
+            .sidebar,
+            .content-display {
+                width: 100%;
+                max-width: none;
+                text-align: left;
+            }
+            .sidebar {
+                margin-bottom: 2rem;
+            }
+            .name {
+                font-size: 2.8rem;
+            }
+            .content-display {
+                padding-top: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Left Column -->
@@ -38,8 +224,6 @@
                         class="action-link">contacto@norydelano.cl</a></p>
                 <br>
                 <p class="credentials-text">Universidad de Chile<br>Miembro del Colegio de Psicólogos</p>
-                <!-- Include QR code? User mentioned "QR code that functions as a business card". -->
-                <!-- Let's put it here but small -->
                 <div style="margin-top: 20px;">
                     <img src="card_qr.svg" width="60" height="60" alt="QR">
                 </div>
@@ -81,6 +265,39 @@
             </p>
         </div>
     </main>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.menu-link');
+            const sections = document.querySelectorAll('.content-section');
+            function showSection(targetId) {
+                // Hide all sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                // Remove active class from all links
+                links.forEach(link => {
+                    link.classList.remove('active');
+                });
+                // Show target section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                // Highlight active link
+                const activeLink = document.querySelector(`.menu-link[data-target="${targetId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    showSection(targetId);
+                });
+            });
+            // Default: Show nothing until clicked
+        });
+    </script>
 </body>
 </html>
