@@ -21,9 +21,9 @@
             color: var(--text-color);
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
             font-weight: 300;
-            /* Helvetica Light */
             margin: 0;
-            padding: 2rem;
+            padding: 0;
+            /* Full width for header line */
             min-height: 100vh;
             box-sizing: border-box;
             display: flex;
@@ -31,33 +31,36 @@
         }
         .page-header {
             width: 100%;
+            border-bottom: 2px solid var(--accent-color);
+            /* Thicker line */
+            padding: 2rem 2rem 1rem 2rem;
+            /* Top Right Bottom Left */
+            box-sizing: border-box;
             margin-bottom: 2rem;
-            border-bottom: 1px solid var(--accent-color);
-            /* The design line */
-            padding-bottom: 1rem;
         }
         .name {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 300;
-            /* Light */
             margin: 0;
             letter-spacing: -0.02em;
             color: var(--link-color);
-            line-height: 1.2;
+            line-height: 1;
             white-space: nowrap;
-            /* Single line */
+            /* Force single line */
         }
         .main-layout {
             display: flex;
             flex-direction: row;
             width: 100%;
             justify-content: space-between;
+            padding: 0 2rem 2rem 2rem;
+            /* Padding for content */
+            box-sizing: border-box;
         }
         /* Left Column: Menu */
         .sidebar {
             flex: 1;
             max-width: 350px;
-            padding-top: 1rem;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
@@ -65,7 +68,6 @@
         }
         .subtitle {
             font-size: 1.5rem;
-            /* Adjusted opacity/size */
             font-weight: 300;
             margin-top: 0;
             margin-bottom: 2rem;
@@ -85,12 +87,9 @@
         .menu-link {
             text-decoration: none;
             color: var(--text-color);
-            /* "Make the links... 1/3 smaller than Nory Delano"
-               Name is 3.5rem. 1/3 smaller = 2/3 * 3.5 ~= 2.3rem.
-            */
-            font-size: 3rem;
+            font-size: 2.3rem;
+            /* ~2/3 of 3.5rem */
             font-weight: 300;
-            /* Light */
             transition: all 0.3s ease;
             display: inline-block;
             padding-left: 0;
@@ -99,7 +98,6 @@
         .menu-link.active {
             color: #000;
             font-weight: 400;
-            /* Slightly bolder on hover/active */
             transform: translateX(5px);
         }
         /* Right Column: Content Display */
@@ -110,7 +108,12 @@
             flex-direction: column;
             justify-content: flex-start;
             padding-top: 1.5rem;
-            /* Align visually with top menu item */
+            /* Align visually with top menu item (which has no margin-top but large font) */
+            /* Actually subtitle is above menu, so content aligns with subtitle or menu? 
+               Subtitle is top of sidebar. content-display padding makes it start lower.
+               Let's align flush top.
+            */
+            padding-top: 0;
             min-height: 400px;
             position: relative;
         }
@@ -146,7 +149,6 @@
         }
         .contact-details {
             font-size: 1.5rem;
-            /* Match menu size roughly? */
             font-weight: 300;
             line-height: 1.4;
         }
@@ -204,87 +206,101 @@
             }
             .name {
                 font-size: 2.5rem;
-                /* Smaller on mobile */
             }
             .menu-link {
                 font-size: 1.8rem;
+            }
+            .page-header {
+                padding: 1.5rem;
+                /* Smaller padding on mobile */
+            }
+            .main-layout {
+                padding: 0 1.5rem 1.5rem 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Left Column -->
-    <div class="sidebar">
-        <header>
-            <h1 class="name">Nory Délano</h1>
-            <p class="</p>
-        </header>
-        <nav class="menu">
-            <ul>
-                <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
-                <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
-                <li><a href="#" class="menu-link" data-target="terapia">Terapia Individual</a></li>
-            </ul>
-        </nav>
+    <div class="page-header">
+        <h1 class="name">Nory Délano</h1>
     </div>
-    <!-- Right Column -->
-    <main class="content-display">
-        <!-- Contacto Section -->
-        <div id="contacto" class="content-section">
-            <div class="profile-photo-placeholder">
-                <svg viewBox="0 0 100 100" class="profile-svg">
-                    <circle cx="50" cy="50" r="50" fill="#E0E0E0" />
-                    <path d="M50 25 A 15 15 0 0 1 50 55 A 15 15 0 0 1 50 25 Z" fill="#FFF" />
-                    <path d="M25 85 Q50 55 75 85" stroke="#FFF" stroke-width="5" fill="none" />
-                </svg>
-            </div>
-            <div class="contact-details">
-                <p><strong>Teléfono:</strong> <a href="tel:+56912345678" class="action-link">+56 9 1234 5678</a></p>
-                <p><strong>Email:</strong> <a href="mailto:contacto@norydelano.cl"
-                        class="action-link">contacto@norydelano.cl</a></p>
-                <br>
-                <p class="credentials-text">Universidad de Chile<br>Miembro del Colegio de Psicólogos</p>
-                <div style="margin-top: 20px;">
-                    <img src="card_qr.svg" width="60" height="60" alt="QR">
+    <div class="main-layout">
+        <!-- Left Column -->
+        <div class="sidebar">
+            <p class="subtitle">Psicóloga</p>
+            <nav class="menu">
+                <ul>
+                    <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
+                    <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
+                    <li><a href="#" class="menu-link" data-target="terapia">Terapia</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Right Column -->
+        <main class="content-display">
+            <!-- Contacto Section -->
+            <div id="contacto" class="content-section">
+                <div class="profile-photo-placeholder">
+                    <svg viewBox="0 0 100 100" class="profile-svg">
+                        <circle cx="50" cy="50" r="50" fill="#E0E0E0" />
+                        <path d="M50 25 A 15 15 0 0 1 50 55 A 15 15 0 0 1 50 25 Z" fill="#FFF" />
+                        <path d="M25 85 Q50 55 75 85" stroke="#FFF" stroke-width="5" fill="none" />
+                    </svg>
+                </div>
+                <div class="contact-details">
+                    <p><strong>Teléfono:</strong> <br><a href="tel:+56912345678" class="action-link">+56 9 1234 5678</a>
+                    </p>
+                    <p><strong>Email:</strong> <br><a href="mailto:contacto@norydelano.cl"
+                            class="action-link">contacto@norydelano.cl</a></p>
+                    <br>
+                    <p class="credentials-text">Universidad de Chile<br>Miembro del Colegio de Psicólogos</p>
+                    <div style="margin-top: 20px;">
+                        <img src="card_qr.svg" width="60" height="60" alt="QR">
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Consultas Section -->
-        <div id="consultas" class="content-section">
-            <div class="location-card">
-                <h3>Consulta Providencia</h3>
-                <p>Av. Providencia 1234, Of. 505</p>
-                <div class="map-placeholder">
-                    <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
-                    </iframe>
+            <!-- Consultas Section -->
+            <div id="consultas" class="content-section">
+                <div class="location-card">
+                    <h3>Consulta Providencia</h3>
+                    <p>Av. Providencia 1234, Of. 505</p>
+                    <div class="map-placeholder">
+                        <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
+                        </iframe>
+                    </div>
+                </div>
+                <div class="location-card">
+                    <h3>Consulta Las Condes</h3>
+                    <p>Av. Apoquindo 4500, Of. 802</p>
+                    <div class="map-placeholder">
+                        <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
+                        </iframe>
+                    </div>
                 </div>
             </div>
-            <div class="location-card">
-                <h3>Consulta Las Condes</h3>
-                <p>Av. Apoquindo 4500, Of. 802</p>
-                <div class="map-placeholder">
-                    <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
-                    </iframe>
-                </div>
+            <!-- Terapia Section -->
+            <div id="terapia" class="content-section">
+                <!-- Using same font size for title as menus? or let the menu be the persistent nav -->
+                <!-- <h2 ...>Terapia Individual</h2> removed to keep it cleaner or matched style? 
+                     User said "description of therapy only when therapy is clicked". 
+                     I'll just keep the description text. 
+                -->
+                <p class="description-text">
+                    <strong>Terapia Individual</strong><br><br>
+                    Un espacio de escucha y contención para abordar dificultades emocionales,
+                    relacionales y personales. El proceso terapéutico busca potenciar el bienestar
+                    y el desarrollo personal a través del autoconocimiento y la comprensión
+                    de los propios patrones de conducta.
+                </p>
+                <p class="description-text">
+                    Enfoque adaptado a las necesidades singulares de cada consultante,
+                    en un ambiente de respeto y confidencialidad.
+                </p>
             </div>
-        </div>
-        <!-- Terapia Section -->
-        <div id="terapia" class="content-section">
-            <h2 style="margin-top:0; font-weight:400; font-size: 2rem;">Terapia Individual</h2>
-            <p class="description-text">
-                Un espacio de escucha y contención para abordar dificultades emocionales,
-                relacionales y personales. El proceso terapéutico busca potenciar el bienestar
-                y el desarrollo personal a través del autoconocimiento y la comprensión
-                de los propios patrones de conducta.
-            </p>
-            <p class="description-text">
-                Enfoque adaptado a las necesidades singulares de cada consultante,
-                en un ambiente de respeto y confidencialidad.
-            </p>
-        </div>
-    </main>
+        </main>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const links = document.querySelectorAll('.menu-link');
