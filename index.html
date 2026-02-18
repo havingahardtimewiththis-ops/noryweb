@@ -39,7 +39,7 @@
             margin-bottom: 2rem;
         }
         .name {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 300;
             margin: 0;
             letter-spacing: -0.02em;
@@ -87,7 +87,7 @@
         .menu-link {
             text-decoration: none;
             color: var(--text-color);
-            font-size: 2.5rem;
+            font-size: 2.3rem;
             /* ~2/3 of 3.5rem */
             font-weight: 300;
             transition: all 0.3s ease;
@@ -160,18 +160,17 @@
             display: none;
             /* overrides via JS */
         }
-        .contact-container {
+        .contact-content-wrapper {
             display: flex;
-            flex-direction: row;
-            gap: 2rem;
-            align-items: flex-start;
+            flex-direction: column;
+            gap: 3rem;
         }
+        /* Profile Photo - Moved to Terapia styles */
         .profile-photo-placeholder {
             width: 200px;
             height: 200px;
             flex-shrink: 0;
             margin-bottom: 0;
-            /* Remove bottom margin since it's side-by-side */
         }
         .profile-svg {
             width: 100%;
@@ -192,12 +191,12 @@
         .action-link:hover {
             border-bottom-color: var(--link-color);
         }
-        /* Maps */
-        /* Removed empty #consultas rule */
-        .consultas-container {
+        /* Maps - Now in Contacto */
+        .maps-container {
             display: flex;
             flex-direction: row;
             gap: 1.5rem;
+            width: 100%;
         }
         .location-card {
             flex: 1;
@@ -205,7 +204,6 @@
             background: rgba(255, 255, 255, 0.6);
             padding: 1.5rem;
             margin-bottom: 0;
-            /* No bottom margin needed in row */
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
         .location-card h3 {
@@ -216,16 +214,29 @@
         }
         .map-placeholder {
             width: 100%;
-            height: 250px;
+            height: 200px;
             background-color: #eee;
             margin-top: 1rem;
         }
-        /* Terapia */
+        /* Terapia Section */
+        #terapia {
+            display: none;
+        }
+        .terapia-container {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        .terapia-text {
+            flex: 1;
+        }
         .description-text {
             font-size: 1.5rem;
             font-weight: 300;
             line-height: 1.4;
             color: var(--text-color);
+            margin-top: 0;
         }
         p,
         h1,
@@ -247,8 +258,8 @@
                 text-align: left;
             }
             /* Stack them back on mobile */
-            .contact-container,
-            .consultas-container {
+            .maps-container,
+            .terapia-container {
                 flex-direction: column;
                 gap: 2rem;
             }
@@ -270,11 +281,12 @@
 <body>
     <img src="card_qr.svg" alt="Scan Me" class="top-corner-qr">
     <div class="page-header">
-        <h1 class="name">Ps. Nory Délano</h1>
+        <h1 class="name">Nory Délano</h1>
     </div>
     <div class="main-layout">
         <!-- Left Column -->
         <div class="sidebar">
+            <p class="subtitle">Psicóloga</p>
             <nav class="menu">
                 <ul>
                     <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
@@ -287,14 +299,8 @@
         <main class="content-display">
             <!-- Contacto Section -->
             <div id="contacto" class="content-section">
-                <div class="contact-container">
-                    <div class="profile-photo-placeholder">
-                        <svg viewBox="0 0 100 100" class="profile-svg">
-                            <circle cx="50" cy="50" r="50" fill="#E0E0E0" />
-                            <path d="M50 25 A 15 15 0 0 1 50 55 A 15 15 0 0 1 50 25 Z" fill="#FFF" />
-                            <path d="M25 85 Q50 55 75 85" stroke="#FFF" stroke-width="5" fill="none" />
-                        </svg>
-                    </div>
+                <div class="contact-content-wrapper">
+                    <!-- Contact Details -->
                     <div class="contact-details">
                         <p><strong>Teléfono:</strong> <br><a href="tel:+56912345678" class="action-link">+56 9 1234
                                 5678</a></p>
@@ -306,49 +312,58 @@
                             <img src="card_qr.svg" width="60" height="60" alt="QR">
                         </div>
                     </div>
+                    <!-- Maps (Moved from Consultas) -->
+                    <div class="maps-container">
+                        <div class="location-card">
+                            <h3>Consulta Providencia</h3>
+                            <p>Av. Providencia 1234, Of. 505</p>
+                            <div class="map-placeholder">
+                                <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="location-card">
+                            <h3>Consulta Las Condes</h3>
+                            <p>Av. Apoquindo 4500, Of. 802</p>
+                            <div class="map-placeholder">
+                                <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- Consultas Section -->
+            <!-- Consultas Section (Placeholder) -->
             <div id="consultas" class="content-section">
-                <div class="consultas-container">
-                    <div class="location-card">
-                        <h3>Consulta Providencia</h3>
-                        <p>Av. Providencia 1234, Of. 505</p>
-                        <div class="map-placeholder">
-                            <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
-                            </iframe>
-                        </div>
-                    </div>
-                    <div class="location-card">
-                        <h3>Consulta Las Condes</h3>
-                        <p>Av. Apoquindo 4500, Of. 802</p>
-                        <div class="map-placeholder">
-                            <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
-                            </iframe>
-                        </div>
-                    </div>
-                </div>
+                <p class="description-text">Información próximamente.</p>
             </div>
             <!-- Terapia Section -->
             <div id="terapia" class="content-section">
-                <!-- Using same font size for title as menus? or let the menu be the persistent nav -->
-                <!-- <h2 ...>Terapia Individual</h2> removed to keep it cleaner or matched style? 
-                     User said "description of therapy only when therapy is clicked". 
-                     I'll just keep the description text. 
-                -->
-                <p class="description-text">
-                    <strong>Terapia Individual</strong><br><br>
-                    Un espacio de escucha y contención para abordar dificultades emocionales,
-                    relacionales y personales. El proceso terapéutico busca potenciar el bienestar
-                    y el desarrollo personal a través del autoconocimiento y la comprensión
-                    de los propios patrones de conducta.
-                </p>
-                <p class="description-text">
-                    Enfoque adaptado a las necesidades singulares de cada consultante,
-                    en un ambiente de respeto y confidencialidad.
-                </p>
+                <div class="terapia-container">
+                    <!-- Portrait (Moved from Contacto) -->
+                    <div class="profile-photo-placeholder">
+                        <svg viewBox="0 0 100 100" class="profile-svg">
+                            <circle cx="50" cy="50" r="50" fill="#E0E0E0" />
+                            <path d="M50 25 A 15 15 0 0 1 50 55 A 15 15 0 0 1 50 25 Z" fill="#FFF" />
+                            <path d="M25 85 Q50 55 75 85" stroke="#FFF" stroke-width="5" fill="none" />
+                        </svg>
+                    </div>
+                    <div class="terapia-text">
+                        <p class="description-text">
+                            <strong>Terapia Individual</strong><br><br>
+                            Un espacio de escucha y contención para abordar dificultades emocionales,
+                            relacionales y personales. El proceso terapéutico busca potenciar el bienestar
+                            y el desarrollo personal a través del autoconocimiento y la comprensión
+                            de los propios patrones de conducta.
+                        </p>
+                        <p class="description-text">
+                            Enfoque adaptado a las necesidades singulares de cada consultante,
+                            en un ambiente de respeto y confidencialidad.
+                        </p>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
