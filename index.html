@@ -17,9 +17,10 @@
             /* Light Grey */
         }
         body {
-            background-color: var(--bg-color);
+            background-color: #FFFFFF;
+            /* White */
             color: var(--text-color);
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-family: "Baskerville", "Palatino Linotype", "Times New Roman", serif;
             font-weight: 300;
             margin: 0;
             padding: 0;
@@ -52,9 +53,8 @@
             display: flex;
             flex-direction: row;
             width: 100%;
-            justify-content: space-between;
+            /* Removed space-between to allow centering the right column */
             padding: 0 2rem 2rem 2rem;
-            /* Padding for content */
             box-sizing: border-box;
         }
         /* Left Column: Menu */
@@ -105,25 +105,27 @@
         /* Right Column: Content Display */
         .content-display {
             flex: 1;
-            max-width: 600px;
+            max-width: 800px;
+            /* Increased to allow centering */
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
-            padding-top: 1.5rem;
-            /* Align visually with top menu item (which has no margin-top but large font) */
-            /* Actually subtitle is above menu, so content aligns with subtitle or menu? 
-               Subtitle is top of sidebar. content-display padding makes it start lower.
-               Let's align flush top.
-            */
+            align-items: center;
+            /* Center content horizontally */
             padding-top: 0;
             min-height: 400px;
             position: relative;
+            margin: 0 auto;
+            /* Center within the remaining flex space */
+            padding-left: 2rem;
         }
         .content-section {
             display: none;
             opacity: 0;
             animation: fadeIn 0.5s forwards;
             text-align: left;
+            width: 100%;
+            /* Ensure sections take full width of the centered container */
         }
         .content-section.active {
             display: block !important;
@@ -167,17 +169,14 @@
             flex-direction: column;
             gap: 3rem;
         }
-        /* Profile Photo - Moved to Terapia styles */
-        .profile-photo-placeholder {
-            width: 200px;
-            height: 200px;
+        /* Profile Photo - Terapia */
+        .profile-photo {
+            width: 416px;
+            /* 2/3 larger than 250px */
+            height: auto;
             flex-shrink: 0;
             margin-bottom: 0;
-        }
-        .profile-svg {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
+            object-fit: cover;
         }
         .contact-details {
             font-size: 1.5rem;
@@ -227,11 +226,19 @@
         .terapia-container {
             display: flex;
             flex-direction: row;
-            gap: 2rem;
+            gap: 3rem;
+            /* Increased gap */
             align-items: flex-start;
+            justify-content: center;
+            /* Center the portrait and text pair */
+            max-width: 800px;
+            /* Limit width for readability */
+            margin: 0 auto;
         }
         .terapia-text {
             flex: 1;
+            max-width: 500px;
+            /* Keep line lengths comfortable */
         }
         .description-text {
             font-size: 1.5rem;
@@ -291,9 +298,9 @@
         <div class="sidebar">
             <nav class="menu">
                 <ul>
-                    <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
-                    <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
                     <li><a href="#" class="menu-link" data-target="terapia">Terapia</a></li>
+                    <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
+                    <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
                 </ul>
             </nav>
         </div>
@@ -344,14 +351,8 @@
             <!-- Terapia Section -->
             <div id="terapia" class="content-section">
                 <div class="terapia-container">
-                    <!-- Portrait (Moved from Contacto) -->
-                    <div class="profile-photo-placeholder">
-                        <svg viewBox="0 0 100 100" class="profile-svg">
-                            <circle cx="50" cy="50" r="50" fill="#E0E0E0" />
-                            <path d="M50 25 A 15 15 0 0 1 50 55 A 15 15 0 0 1 50 25 Z" fill="#FFF" />
-                            <path d="M25 85 Q50 55 75 85" stroke="#FFF" stroke-width="5" fill="none" />
-                        </svg>
-                    </div>
+                    <!-- Portrait -->
+                    <img class="profile-photo" src="portrait.png" alt="Psicóloga Nory Délano">
                     <div class="terapia-text">
                         <p class="description-text">
                             <strong>Terapia Individual</strong><br><br>
