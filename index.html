@@ -67,10 +67,12 @@
             text-align: left;
         }
         .subtitle {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            /* Made smaller */
             font-weight: 300;
-            margin-top: 0;
-            margin-bottom: 2rem;
+            margin-top: 0.5rem;
+            /* Small margin from name */
+            margin-bottom: 0;
             color: var(--accent-color);
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -124,7 +126,7 @@
             text-align: left;
         }
         .content-section.active {
-            display: block;
+            display: block !important;
         }
         @keyframes fadeIn {
             from {
@@ -282,11 +284,11 @@
     <img src="card_qr.svg" alt="Scan Me" class="top-corner-qr">
     <div class="page-header">
         <h1 class="name">Nory Délano</h1>
+        <p class="subtitle">Psicóloga</p>
     </div>
     <div class="main-layout">
         <!-- Left Column -->
         <div class="sidebar">
-            <p class="subtitle">Psicóloga</p>
             <nav class="menu">
                 <ul>
                     <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
