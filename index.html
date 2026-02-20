@@ -27,17 +27,39 @@
             /* Full width for header line */
             min-height: 100vh;
             box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 125px 1fr;
+            /* Halved size */
+            grid-template-rows: 125px 1fr;
+            /* Exact square */
+        }
+        .top-left-square {
+            grid-column: 1;
+            grid-row: 1;
+            border-bottom: 2px solid var(--accent-color);
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+        .qr-image {
+            width: 80px;
+            /* Shrunk to fit inside 125px square */
+            height: 80px;
+            opacity: 0.8;
         }
         .page-header {
-            width: 100%;
+            grid-column: 2;
+            grid-row: 1;
             border-bottom: 2px solid var(--accent-color);
             /* Thicker line */
-            padding: 2rem 2rem 1rem 2rem;
-            /* Top Right Bottom Left */
+            padding: 1rem 2rem 1rem 2rem;
+            /* Reduced padding to fit the shortened height */
             box-sizing: border-box;
-            margin-bottom: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            /* Push to bottom near line */
         }
         .name {
             font-size: 3.5rem;
@@ -49,22 +71,19 @@
             white-space: nowrap;
             /* Force single line */
         }
-        .main-layout {
-            display: flex;
-            flex-direction: row;
-            width: 100%;
-            /* Removed space-between to allow centering the right column */
-            padding: 0 2rem 2rem 2rem;
-            box-sizing: border-box;
-        }
         /* Left Column: Menu */
         .sidebar {
-            flex: 1;
-            max-width: 350px;
+            grid-column: 1;
+            grid-row: 2;
+            padding: 2rem 1rem 2rem 1rem;
+            /* Reduced padding to fit narrow width */
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            /* Align to the right edge against the line */
             text-align: left;
+            /* Text align right so visual weigh leans against line */
+            box-sizing: border-box;
         }
         .subtitle {
             font-size: 1.2rem;
@@ -85,12 +104,14 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            align-items: flex-start;
+            /* Keep links aligned right */
         }
         .menu-link {
             text-decoration: none;
             color: var(--text-color);
-            font-size: 2.3rem;
-            /* ~2/3 of 3.5rem */
+            font-size: 1.6rem;
+            /* Reduced font size to fit narrower sidebar */
             font-weight: 300;
             transition: all 0.3s ease;
             display: inline-block;
@@ -104,20 +125,19 @@
         }
         /* Right Column: Content Display */
         .content-display {
-            flex: 1;
-            max-width: 800px;
-            /* Increased to allow centering */
+            grid-column: 2;
+            grid-row: 2;
             display: flex;
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             /* Center content horizontally */
-            padding-top: 0;
+            padding: 2rem;
+            /* Adjusted base padding to be more reasonable */
             min-height: 400px;
             position: relative;
-            margin: 0 auto;
-            /* Center within the remaining flex space */
-            padding-left: 2rem;
+            box-sizing: border-box;
+            width: 100%;
         }
         .content-section {
             display: none;
@@ -140,25 +160,7 @@
                 transform: translateY(0);
             }
         }
-        /* QR Top Right */
-        .top-corner-qr {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            width: 80px;
-            height: 80px;
-            opacity: 0.8;
-            z-index: 1000;
-        }
-        /* Responsive QR */
-        @media (max-width: 768px) {
-            .top-corner-qr {
-                width: 60px;
-                height: 60px;
-                top: 1.5rem;
-                right: 1.5rem;
-            }
-        }
+        /* Removed top-corner-qr */
         /* Contact Section */
         #contacto {
             display: none;
@@ -171,8 +173,8 @@
         }
         /* Profile Photo - Terapia */
         .profile-photo {
-            width: 416px;
-            /* 2/3 larger than 250px */
+            width: 312px;
+            /* 1/4 smaller than 416px */
             height: auto;
             flex-shrink: 0;
             margin-bottom: 0;
@@ -256,21 +258,37 @@
         }
         /* Responsive */
         @media (max-width: 900px) {
-            /* Increased breakpoint for horizontal layout */
-            .main-layout {
+            body {
+                display: flex;
                 flex-direction: column;
             }
-            .sidebar,
+            .top-left-square {
+                border-right: none;
+                padding: 1rem;
+            }
+            .page-header {
+                padding: 1.5rem;
+            }
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid var(--accent-color);
+                width: 100%;
+                max-width: none;
+                padding: 1.5rem;
+                align-items: center;
+            }
             .content-display {
                 width: 100%;
                 max-width: none;
-                text-align: left;
+                padding: 1.5rem;
             }
             /* Stack them back on mobile */
             .maps-container,
             .terapia-container {
                 flex-direction: column;
                 gap: 2rem;
+                align-items: center;
+                text-align: center;
             }
             .name {
                 font-size: 2.5rem;
@@ -278,98 +296,90 @@
             .menu-link {
                 font-size: 1.8rem;
             }
-            .page-header {
-                padding: 1.5rem;
-            }
-            .main-layout {
-                padding: 0 1.5rem 1.5rem 1.5rem;
-            }
         }
     </style>
 </head>
 <body>
-    <img src="card_qr.svg" alt="Scan Me" class="top-corner-qr">
-    <div class="page-header">
+    <div class="top-left-square">
+        <img src="card_qr.svg" alt="Scan Me" class="qr-image">
+    </div>
+    <header class="page-header">
         <h1 class="name">Nory Délano</h1>
         <p class="subtitle">Psicóloga</p>
-    </div>
-    <div class="main-layout">
-        <!-- Left Column -->
-        <div class="sidebar">
-            <nav class="menu">
-                <ul>
-                    <li><a href="#" class="menu-link" data-target="terapia">Terapia</a></li>
-                    <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
-                    <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
-                </ul>
-            </nav>
+    </header>
+    <aside class="sidebar">
+        <nav class="menu">
+            <ul>
+                <li><a href="#" class="menu-link" data-target="terapia">Terapia</a></li>
+                <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
+                <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="content-display">
+        <!-- Contacto Section -->
+        <div id="contacto" class="content-section">
+            <div class="contact-content-wrapper">
+                <!-- Contact Details -->
+                <div class="contact-details">
+                    <p><strong>Teléfono:</strong> <br><a href="tel:+56912345678" class="action-link">+56 9 1234
+                            5678</a></p>
+                    <p><strong>Email:</strong> <br><a href="mailto:contacto@norydelano.cl"
+                            class="action-link">contacto@norydelano.cl</a></p>
+                    <br>
+                    <p class="credentials-text">Universidad de Chile<br>Miembro del Colegio de Psicólogos</p>
+                    <div style="margin-top: 20px;">
+                        <img src="card_qr.svg" width="60" height="60" alt="QR">
+                    </div>
+                </div>
+                <!-- Maps (Moved from Consultas) -->
+                <div class="maps-container">
+                    <div class="location-card">
+                        <h3>Consulta Providencia</h3>
+                        <p>Av. Providencia 1234, Of. 505</p>
+                        <div class="map-placeholder">
+                            <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="location-card">
+                        <h3>Consulta Las Condes</h3>
+                        <p>Av. Apoquindo 4500, Of. 802</p>
+                        <div class="map-placeholder">
+                            <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- Right Column -->
-        <main class="content-display">
-            <!-- Contacto Section -->
-            <div id="contacto" class="content-section">
-                <div class="contact-content-wrapper">
-                    <!-- Contact Details -->
-                    <div class="contact-details">
-                        <p><strong>Teléfono:</strong> <br><a href="tel:+56912345678" class="action-link">+56 9 1234
-                                5678</a></p>
-                        <p><strong>Email:</strong> <br><a href="mailto:contacto@norydelano.cl"
-                                class="action-link">contacto@norydelano.cl</a></p>
-                        <br>
-                        <p class="credentials-text">Universidad de Chile<br>Miembro del Colegio de Psicólogos</p>
-                        <div style="margin-top: 20px;">
-                            <img src="card_qr.svg" width="60" height="60" alt="QR">
-                        </div>
-                    </div>
-                    <!-- Maps (Moved from Consultas) -->
-                    <div class="maps-container">
-                        <div class="location-card">
-                            <h3>Consulta Providencia</h3>
-                            <p>Av. Providencia 1234, Of. 505</p>
-                            <div class="map-placeholder">
-                                <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
-                                </iframe>
-                            </div>
-                        </div>
-                        <div class="location-card">
-                            <h3>Consulta Las Condes</h3>
-                            <p>Av. Apoquindo 4500, Of. 802</p>
-                            <div class="map-placeholder">
-                                <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
-                                </iframe>
-                            </div>
-                        </div>
-                    </div>
+        <!-- Consultas Section (Placeholder) -->
+        <div id="consultas" class="content-section">
+            <p class="description-text">Información próximamente.</p>
+        </div>
+        <!-- Terapia Section -->
+        <div id="terapia" class="content-section">
+            <div class="terapia-container">
+                <!-- Portrait -->
+                <img class="profile-photo" src="portrait.png" alt="Psicóloga Nory Délano">
+                <div class="terapia-text">
+                    <p class="description-text">
+                        <strong>Terapia Individual</strong><br><br>
+                        Un espacio de escucha y contención para abordar dificultades emocionales,
+                        relacionales y personales. El proceso terapéutico busca potenciar el bienestar
+                        y el desarrollo personal a través del autoconocimiento y la comprensión
+                        de los propios patrones de conducta.
+                    </p>
+                    <p class="description-text">
+                        Enfoque adaptado a las necesidades singulares de cada consultante,
+                        en un ambiente de respeto y confidencialidad.
+                    </p>
                 </div>
             </div>
-            <!-- Consultas Section (Placeholder) -->
-            <div id="consultas" class="content-section">
-                <p class="description-text">Información próximamente.</p>
-            </div>
-            <!-- Terapia Section -->
-            <div id="terapia" class="content-section">
-                <div class="terapia-container">
-                    <!-- Portrait -->
-                    <img class="profile-photo" src="portrait.png" alt="Psicóloga Nory Délano">
-                    <div class="terapia-text">
-                        <p class="description-text">
-                            <strong>Terapia Individual</strong><br><br>
-                            Un espacio de escucha y contención para abordar dificultades emocionales,
-                            relacionales y personales. El proceso terapéutico busca potenciar el bienestar
-                            y el desarrollo personal a través del autoconocimiento y la comprensión
-                            de los propios patrones de conducta.
-                        </p>
-                        <p class="description-text">
-                            Enfoque adaptado a las necesidades singulares de cada consultante,
-                            en un ambiente de respeto y confidencialidad.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
+        </div>
+    </main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const links = document.querySelectorAll('.menu-link');
