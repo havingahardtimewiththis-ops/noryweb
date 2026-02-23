@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nory Délano - Psicóloga</title>
+    <style>
+        :root {
+            /* Updated Palette */
+            --bg-color: #FF0000;
+            /* Red */
+            --text-color: #FFFFFF;
+            /* White */
+            --link-color: #FFFFFF;
+            /* White */
+            --accent-color: rgba(255, 255, 255, 0.5);
+            /* Semi-transparent white for borders/accents */
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Baskerville", "Palatino Linotype", "Times New Roman", serif;
+            font-weight: 300;
+            margin: 0;
+            padding: 0;
+            /* Full width for header line */
+            min-height: 100vh;
+            box-sizing: border-box;
+            display: grid;
+            grid-template-columns: 125px 1fr;
+            /* Halved size */
+            grid-template-rows: auto 1fr;
+            /* Hugs header closely */
+        }
+        .top-left-square {
+            grid-column: 1;
+            grid-row: 1;
+            border-bottom: 2px solid var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 1rem;
+            /* Reduced to move line up */
+            padding-bottom: 2rem;
+            box-sizing: border-box;
+        }
+        /* QR Bottom Left */
+        .bottom-corner-qr {
+            position: absolute;
+            bottom: 2rem;
+            left: 2rem;
+            width: 53px;
+            /* 1/3 larger than 80px */
+            height: 53px;
+            opacity: 0.8;
+            z-index: 1000;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            cursor: pointer;
+        }
+        .bottom-corner-qr:hover,
+        .bottom-corner-qr:active,
+        .bottom-corner-qr.enlarged {
+            transform: scale(4);
+            /* Scale by 4 so it reaches 212px when enlarged */
+            transform-origin: bottom left;
+            /* Scale outwards from the corner */
+            opacity: 1;
+            /* Make it fully opaque when hovered */
+        }
+        .page-header {
+            grid-column: 2;
+            grid-row: 1;
+            border-bottom: 2px solid var(--accent-color);
+            padding: 1rem 2rem 1rem 2rem;
+            /* Reduced top padding to move up */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: baseline;
+            justify-content: flex-start;
+            gap: 1.5rem;
+        }
+        .name {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin: 0;
+            letter-spacing: -0.02em;
+            color: var(--link-color);
+            line-height: 1;
+            white-space: nowrap;
+            /* Force single line */
+        }
+        /* Left Column: Menu */
+        .sidebar {
+            grid-column: 1;
+            grid-row: 2;
+            padding: 2rem 1rem 2rem 1rem;
+            /* Reduced padding to fit narrow width */
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /* Align to the right edge against the line */
+            text-align: left;
+            /* Text align right so visual weigh leans against line */
+            box-sizing: border-box;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            /* Made smaller */
+            font-weight: 300;
+            margin: 0;
+            /* Reset margins since it's inline now */
+            color: var(--text-color);
+            /* Updated to white */
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: inline-block;
+        }
+        .menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: flex-start;
+            /* Keep links aligned right */
+        }
+        .menu-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 1.6rem;
+            /* Reduced font size to fit narrower sidebar */
+            font-weight: 300;
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding-left: 0;
+        }
+        .menu-link:hover,
+        .menu-link:active,
+        .menu-link.active {
+            color: #00FF00;
+            /* Green on hover/click/active */
+            font-weight: 400;
+            transform: translateX(5px);
+        }
+        /* Right Column: Content Display */
+        .content-display {
+            grid-column: 2;
+            grid-row: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            /* Center content horizontally */
+            padding: 2rem;
+            /* Adjusted base padding to be more reasonable */
+            min-height: 400px;
+            position: relative;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .content-section {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+            text-align: left;
+            width: 100%;
+            /* Ensure sections take full width of the centered container */
+        }
+        .content-section.active {
+            display: block !important;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Removed top-corner-qr */
+        /* Contact Section */
+        #contacto {
+            display: none;
+            /* overrides via JS */
+        }
+        .contact-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+        /* Profile Photo - Terapia */
+        .profile-photo {
+            width: 312px;
+            /* 1/4 smaller than 416px */
+            height: auto;
+            flex-shrink: 0;
+            margin-bottom: 0;
+            object-fit: cover;
+        }
+        .contact-details {
+            font-size: 1.5rem;
+            font-weight: 300;
+            line-height: 1.4;
+            padding-top: 0;
+        }
+        .action-link {
+            color: var(--link-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+        }
+        .action-link:hover {
+            border-bottom-color: var(--link-color);
+            color: #00FF00;
+            /* Green on hover */
+        }
+        /* Maps - Now in Contacto */
+        .maps-container {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .location-card {
+            flex: 1;
+            /* Equal width */
+            background: rgba(255, 255, 255, 0.1);
+            /* Semi-transparent white to contrast red */
+            padding: 1.5rem;
+            margin-bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* Light border */
+        }
+        .location-card h3 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--text-color);
+            /* Updated to white */
+        }
+        .map-placeholder {
+            width: 100%;
+            height: 200px;
+            background-color: #eee;
+            margin-top: 1rem;
+        }
+        /* Terapia Section */
+        #terapia {
+            display: none;
+        }
+        .terapia-container {
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+            /* Increased gap */
+            align-items: flex-start;
+            justify-content: center;
+            /* Center the portrait and text pair */
+            max-width: 800px;
+            /* Limit width for readability */
+            margin: 0 auto;
+        }
+        .terapia-text {
+            flex: 1;
+            max-width: 500px;
+            /* Keep line lengths comfortable */
+        }
+        .description-text {
+            font-size: 1.5rem;
+            font-weight: 300;
+            line-height: 1.4;
+            color: var(--text-color);
+            /* Kept explicit just in case */
+            margin-top: 0;
+        }
+        p,
+        h1,
+        h2,
+        h3,
+        a {
+            font-weight: 300;
+        }
+        /* Responsive */
+        @media (max-width: 900px) {
+            body {
+                display: flex;
+                flex-direction: column;
+            }
+            .top-left-square {
+                border-right: none;
+                padding: 1rem;
+            }
+            .page-header {
+                padding: 1.5rem;
+            }
+            .sidebar {
+                border-right: none;
+                border-bottom: 2px solid var(--accent-color);
+                width: 100%;
+                max-width: none;
+                padding: 1.5rem;
+                align-items: center;
+            }
+            .content-display {
+                width: 100%;
+                max-width: none;
+                padding: 1.5rem;
+            }
+            /* Stack them back on mobile */
+            .maps-container,
+            .terapia-container {
+                flex-direction: column;
+                gap: 2rem;
+                align-items: center;
+                text-align: center;
+            }
+            .name {
+                font-size: 2.5rem;
+            }
+            .menu-link {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <img src="https://i.imgur.com/8Pw9ocz.png" alt="Scan Me" class="bottom-corner-qr">
+    <div class="top-left-square">
+        <!-- Empty space to maintain layout -->
+    </div>
+    <header class="page-header">
+        <h1 class="name">Nory Délano</h1>
+        <p class="subtitle">Psicóloga</p>
+    </header>
+    <aside class="sidebar">
+        <nav class="menu">
+            <ul>
+                <li><a href="#" class="menu-link" data-target="terapia">Terapia</a></li>
+                <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
+                <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <main class="content-display">
+        <!-- Contacto Section -->
+        <div id="contacto" class="content-section">
+            <div class="contact-content-wrapper">
+                <!-- Contact Details -->
+                <div class="contact-details">
+                    <p><strong>Teléfono:</strong> <br><a href="tel:+56912345678" class="action-link">+56 9 1234
+                            5678</a></p>
+                    <p><strong>Email:</strong> <br><a href="mailto:contacto@norydelano.cl"
+                            class="action-link">contacto@norydelano.cl</a></p>
+                    <br>
+                    <p class="credentials-text">Universidad de Chile<br>Miembro del Colegio de Psicólogos</p>
+                    <div style="margin-top: 20px;">
+                        <img src="https://i.imgur.com/8Pw9ocz.png" width="60" height="60" alt="QR">
+                    </div>
+                </div>
+                <!-- Maps (Moved from Consultas) -->
+                <div class="maps-container">
+                    <div class="location-card">
+                        <h3>Consulta Providencia</h3>
+                        <p>Av. Providencia 1234, Of. 505</p>
+                        <div class="map-placeholder">
+                            <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
+                            </iframe>
+                        </div>
+                    </div>
+                    <div class="location-card">
+                        <h3>Consulta Las Condes</h3>
+                        <p>Av. Apoquindo 4500, Of. 802</p>
+                        <div class="map-placeholder">
+                            <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Consultas Section (Placeholder) -->
+        <div id="consultas" class="content-section">
+            <p class="description-text">Información próximamente.</p>
+        </div>
+        <!-- Terapia Section -->
+        <div id="terapia" class="content-section">
+            <div class="terapia-container">
+                <!-- Portrait -->
+                <img class="profile-photo" src="portrait.png" alt="Psicóloga Nory Délano">
+                <div class="terapia-text">
+                    <p class="description-text">
+                        <strong>Terapia Individual</strong><br><br>
+                        Un espacio de escucha y contención para abordar dificultades emocionales,
+                        relacionales y personales. El proceso terapéutico busca potenciar el bienestar
+                        y el desarrollo personal a través del autoconocimiento y la comprensión
+                        de los propios patrones de conducta.
+                    </p>
+                    <p class="description-text">
+                        Enfoque adaptado a las necesidades singulares de cada consultante,
+                        en un ambiente de respeto y confidencialidad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const links = document.querySelectorAll('.menu-link');
+            const sections = document.querySelectorAll('.content-section');
+            const qrCode = document.querySelector('.bottom-corner-qr');
+            // Toggle QR code size on click
+            if (qrCode) {
+                qrCode.addEventListener('click', () => {
+                    qrCode.classList.toggle('enlarged');
+                });
+            }
+            function showSection(targetId) {
+                // Hide all sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                });
+                // Remove active class from all links
+                links.forEach(link => {
+                    link.classList.remove('active');
+                });
+                // Show target section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+                }
+                // Highlight active link
+                const activeLink = document.querySelector(`.menu-link[data-target="${targetId}"]`);
+                if (activeLink) {
+                    activeLink.classList.add('active');
+                }
+            }
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('data-target');
+                    showSection(targetId);
+                });
+            });
+            // Default: Show Terapia
+            showSection('terapia');
+        });
+    </script>
+</body>
+</html>
