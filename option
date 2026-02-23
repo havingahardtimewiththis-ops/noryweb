@@ -139,8 +139,8 @@
         .menu-link:hover,
         .menu-link:active,
         .menu-link.active {
-            color: #00FF00;
-            /* Green on hover/click/active */
+            color: #006400;
+            /* Dark Green on hover/click/active */
             font-weight: 400;
             transform: translateX(5px);
         }
@@ -214,8 +214,8 @@
         }
         .action-link:hover {
             border-bottom-color: var(--link-color);
-            color: #00FF00;
-            /* Green on hover */
+            color: #006400;
+            /* Dark Green on hover */
         }
         /* Maps - Now in Contacto */
         .maps-container {
@@ -391,7 +391,7 @@
         <div id="terapia" class="content-section">
             <div class="terapia-container">
                 <!-- Portrait -->
-                <img class="profile-photo" src="portrait.png" alt="Psicóloga Nory Délano">
+                <img class="profile-photo" src="https://i.imgur.com/8mSHrgO.png" alt="Psicóloga Nory Délano">
                 <div class="terapia-text">
                     <p class="description-text">
                         <strong>Terapia Individual</strong><br><br>
