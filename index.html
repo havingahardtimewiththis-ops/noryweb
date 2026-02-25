@@ -6,32 +6,26 @@
     <title>Nory Délano - Psicóloga</title>
     <style>
         :root {
-            /* New Pastel Palette */
             --bg-color: #FEFAE0;
-            /* Pastel Yellow / Cream */
             --text-color: #555555;
-            /* Standard Grey */
             --link-color: #333333;
-            /* Darker Grey */
             --accent-color: #888888;
-            /* Light Grey */
+        }
+        html {
+            scroll-behavior: smooth;
         }
         body {
             background-color: #FFFFFF;
-            /* White */
             color: var(--text-color);
             font-family: "Baskerville", "Palatino Linotype", "Times New Roman", serif;
             font-weight: 300;
             margin: 0;
             padding: 0;
-            /* Full width for header line */
             min-height: 100vh;
             box-sizing: border-box;
             display: grid;
             grid-template-columns: 125px 1fr;
-            /* Halved size */
             grid-template-rows: auto 1fr;
-            /* Hugs header closely */
         }
         .top-left-square {
             grid-column: 1;
@@ -41,39 +35,14 @@
             align-items: center;
             justify-content: center;
             padding-top: 1rem;
-            /* Reduced to move line up */
             padding-bottom: 2rem;
             box-sizing: border-box;
-        }
-        /* QR Bottom Left */
-        .bottom-corner-qr {
-            position: absolute;
-            bottom: 2rem;
-            left: 2rem;
-            width: 53px;
-            /* 1/3 larger than 80px */
-            height: 53px;
-            opacity: 0.8;
-            z-index: 1000;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            cursor: pointer;
-        }
-        .bottom-corner-qr:hover,
-        .bottom-corner-qr:active,
-        .bottom-corner-qr.enlarged {
-            transform: scale(4);
-            /* Scale by 4 so it reaches 212px when enlarged */
-            transform-origin: bottom left;
-            /* Scale outwards from the corner */
-            opacity: 1;
-            /* Make it fully opaque when hovered */
         }
         .page-header {
             grid-column: 2;
             grid-row: 1;
             border-bottom: 2px solid var(--accent-color);
             padding: 1rem 2rem 1rem 2rem;
-            /* Reduced top padding to move up */
             box-sizing: border-box;
             display: flex;
             flex-direction: row;
@@ -89,28 +58,24 @@
             color: var(--link-color);
             line-height: 1;
             white-space: nowrap;
-            /* Force single line */
         }
-        /* Left Column: Menu */
         .sidebar {
             grid-column: 1;
             grid-row: 2;
             padding: 2rem 1rem 2rem 1rem;
-            /* Reduced padding to fit narrow width */
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            /* Align to the right edge against the line */
             text-align: left;
-            /* Text align right so visual weigh leans against line */
             box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            height: fit-content;
         }
         .subtitle {
             font-size: 1.2rem;
-            /* Made smaller */
             font-weight: 300;
             margin: 0;
-            /* Reset margins since it's inline now */
             color: var(--accent-color);
             text-transform: uppercase;
             letter-spacing: 0.1em;
@@ -124,13 +89,11 @@
             flex-direction: column;
             gap: 1.5rem;
             align-items: flex-start;
-            /* Keep links aligned right */
         }
         .menu-link {
             text-decoration: none;
             color: var(--text-color);
             font-size: 1.6rem;
-            /* Reduced font size to fit narrower sidebar */
             font-weight: 300;
             transition: all 0.3s ease;
             display: inline-block;
@@ -139,11 +102,14 @@
         .menu-link:hover,
         .menu-link:active {
             color: #FF0000;
-            /* Red on hover/click */
             font-weight: 400;
             transform: translateX(5px);
         }
-        /* Right Column: Content Display */
+        .menu-link.active {
+            color: var(--text-color);
+            font-weight: 400;
+            transform: translateX(5px);
+        }
         .content-display {
             grid-column: 2;
             grid-row: 2;
@@ -151,50 +117,27 @@
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
-            /* Center content horizontally */
             padding: 2rem;
-            /* Adjusted base padding to be more reasonable */
             min-height: 400px;
             position: relative;
             box-sizing: border-box;
             width: 100%;
+            gap: 6rem;
+            /* Space between Terapia and Contacto */
         }
         .content-section {
-            display: none;
-            opacity: 0;
-            animation: fadeIn 0.5s forwards;
             text-align: left;
             width: 100%;
-            /* Ensure sections take full width of the centered container */
-        }
-        .content-section.active {
-            display: block !important;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        /* Removed top-corner-qr */
-        /* Contact Section */
-        #contacto {
-            display: none;
-            /* overrides via JS */
+            scroll-margin-top: 2rem;
+            /* Give some breathing room when scrolling */
         }
         .contact-content-wrapper {
             display: flex;
             flex-direction: column;
             gap: 3rem;
         }
-        /* Profile Photo - Terapia */
         .profile-photo {
             width: 312px;
-            /* 1/4 smaller than 416px */
             height: auto;
             flex-shrink: 0;
             margin-bottom: 0;
@@ -214,7 +157,6 @@
         .action-link:hover {
             border-bottom-color: var(--link-color);
         }
-        /* Maps - Now in Contacto */
         .maps-container {
             display: flex;
             flex-direction: row;
@@ -223,7 +165,6 @@
         }
         .location-card {
             flex: 1;
-            /* Equal width */
             background: rgba(255, 255, 255, 0.6);
             padding: 1.5rem;
             margin-bottom: 0;
@@ -241,26 +182,18 @@
             background-color: #eee;
             margin-top: 1rem;
         }
-        /* Terapia Section */
-        #terapia {
-            display: none;
-        }
         .terapia-container {
             display: flex;
             flex-direction: row;
             gap: 3rem;
-            /* Increased gap */
             align-items: flex-start;
             justify-content: center;
-            /* Center the portrait and text pair */
             max-width: 800px;
-            /* Limit width for readability */
             margin: 0 auto;
         }
         .terapia-text {
             flex: 1;
             max-width: 500px;
-            /* Keep line lengths comfortable */
         }
         .description-text {
             font-size: 1.5rem;
@@ -276,11 +209,20 @@
         a {
             font-weight: 300;
         }
-        /* Responsive */
+        /* Mobile Adjustments */
         @media (max-width: 900px) {
             body {
                 display: flex;
                 flex-direction: column;
+            }
+            .sidebar {
+                position: static;
+                border-right: none;
+                border-bottom: 2px solid var(--accent-color);
+                width: 100%;
+                max-width: none;
+                padding: 1.5rem;
+                align-items: center;
             }
             .top-left-square {
                 border-right: none;
@@ -289,20 +231,11 @@
             .page-header {
                 padding: 1.5rem;
             }
-            .sidebar {
-                border-right: none;
-                border-bottom: 2px solid var(--accent-color);
-                width: 100%;
-                max-width: none;
-                padding: 1.5rem;
-                align-items: center;
-            }
             .content-display {
                 width: 100%;
                 max-width: none;
                 padding: 1.5rem;
             }
-            /* Stack them back on mobile */
             .maps-container,
             .terapia-container {
                 flex-direction: column;
@@ -316,14 +249,16 @@
             .menu-link {
                 font-size: 1.8rem;
             }
+            /* Add some spacing for mobile menu */
+            .menu ul {
+                flex-direction: row;
+                gap: 2rem;
+            }
         }
     </style>
 </head>
 <body>
-    <img src="https://i.imgur.com/8Pw9ocz.png" alt="Scan Me" class="bottom-corner-qr">
-    <div class="top-left-square">
-        <!-- Empty space to maintain layout -->
-    </div>
+    <div class="top-left-square"></div>
     <header class="page-header">
         <h1 class="name">Nory Délano</h1>
         <p class="subtitle">Psicóloga Clínica</p>
@@ -331,19 +266,59 @@
     <aside class="sidebar">
         <nav class="menu">
             <ul>
-                <li><a href="#" class="menu-link" data-target="terapia">Terapia</a></li>
-                <li><a href="#" class="menu-link" data-target="consultas">Consultas</a></li>
-                <li><a href="#" class="menu-link" data-target="contacto">Contacto</a></li>
+                <li><a href="#terapia" class="menu-link active" data-target="terapia">Terapia</a></li>
+                <li><a href="#contacto" class="menu-link" data-target="contacto">Contacto</a></li>
             </ul>
         </nav>
     </aside>
     <main class="content-display">
+        <!-- Terapia Section -->
+        <div id="terapia" class="content-section">
+            <div class="terapia-container">
+                <!-- Portrait -->
+                <img class="profile-photo" src="https://i.imgur.com/8mSHrgO.png" alt="Psicóloga Nory Délano">
+                <div class="terapia-text">
+                    <div class="description-text">
+                        <div style="margin-bottom: 1.5rem;">
+                            <h1 style="margin: 0; font-size: 2.5rem;">Nory Delano</h1>
+                            <h2 style="margin: 0.5rem 0 1.5rem 0; font-size: 1.5rem; color: var(--accent-color);">
+                                Psicóloga Clínica</h2>
+                        </div>
+                        <p>
+                            Nory Delano es Psicóloga Clínica, con una sólida formación en el acompañamiento
+                            terapéutico de adolescentes y adultos. Su enfoque se basa en la escucha activa,
+                            el respeto profundo por la singularidad de cada persona y la convicción de que
+                            todo proceso terapéutico es un espacio de transformación y crecimiento.
+                        </p>
+                        <p>
+                            Con formación en psicoanálisis y una mirada integral de la salud mental,
+                            Nory Delano trabaja abordando temáticas como ansiedad, depresión, conflictos
+                            vinculares, procesos de duelo, crisis vitales y fortalecimiento de la autoestima.
+                            Su práctica se caracteriza por generar un espacio seguro, confidencial y libre
+                            de juicios, donde cada paciente pueda explorar su historia, comprender sus
+                            emociones y construir nuevas herramientas para su bienestar.
+                        </p>
+                        <p>
+                            Comprometida con la ética profesional y el desarrollo continuo, Nory Delano
+                            entiende la psicoterapia como un proceso colaborativo, en el que terapeuta
+                            y paciente trabajan juntos para promover cambios significativos y duraderos.
+                        </p>
+                        <br>
+                        <p>
+                            Enfoque adaptado a las necesidades singulares de cada consultante,
+                            en un ambiente de respeto y confidencialidad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Contacto Section -->
         <div id="contacto" class="content-section">
             <div class="contact-content-wrapper">
                 <!-- Contact Details -->
                 <div class="contact-details">
-                    <p><strong>Whatsapp:</strong> <br><a href="tel:+56992312500" class="action-link">+56 992 312 500</a></p>
+                    <p><strong>Whatsapp:</strong> <br><a href="tel:+56992312500" class="action-link">+56 992 312 500</a>
+                    </p>
                     <p><strong>Email:</strong> <br><a href="mailto:contacto@norydelano.cl"
                             class="action-link">contacto@norydelano.cl</a></p>
                     <br>
@@ -352,14 +327,14 @@
                         <img src="https://i.imgur.com/8Pw9ocz.png" width="60" height="60" alt="QR">
                     </div>
                 </div>
-                <!-- Maps (Moved from Consultas) -->
+                <!-- Maps -->
                 <div class="maps-container">
                     <div class="location-card">
                         <h3>Consulta Providencia</h3>
                         <p>Av. Nueva Providencia 1881, Of. 1004, Providencia</p>
                         <div class="map-placeholder">
                             <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3329.626776100867!2d-70.6186836848011!3d-33.43126848077977!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662cf7769999999%3A0x6969696969696969!2sProvidencia%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000000">
+                                src="https://maps.google.com/maps?q=Av.%20Nueva%20Providencia%201881,%20Providencia,%20Santiago&t=&z=15&ie=UTF8&iwloc=&output=embed">
                             </iframe>
                         </div>
                     </div>
@@ -368,94 +343,36 @@
                         <p>Av. Kennedy 6800, Of. 210, Torre B, Vitacura </p>
                         <div class="map-placeholder">
                             <iframe width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3330.155456578505!2d-70.57969858480155!3d-33.41707298078347!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662ce5678999999%3A0x4242424242424242!2sLas%20Condes%2C%20Santiago!5e0!3m2!1sen!2scl!4v1620000000001">
+                                src="https://maps.google.com/maps?q=Av.%20Kennedy%206800,%20Vitacura,%20Santiago&t=&z=15&ie=UTF8&iwloc=&output=embed">
                             </iframe>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Terapia Section -->
-        <div id="terapia" class="content-section">
-            <div class="terapia-container">
-                <!-- Portrait -->
-                <img class="profile-photo" src="https://i.imgur.com/8mSHrgO.png" alt="Psicóloga Nory Délano">
-                <div class="terapia-text">
-                    <p class="description-text">
-                         <h1>Nory Delano</h1>
-  <h2>Psicóloga Clínica</h2>
-
-  <p>
-    Nory Delano es Psicóloga Clínica, con una sólida formación en el acompañamiento 
-    terapéutico de adolescentes y adultos. Su enfoque se basa en la escucha activa, 
-    el respeto profundo por la singularidad de cada persona y la convicción de que 
-    todo proceso terapéutico es un espacio de transformación y crecimiento.
-  </p>
-
-  <p>
-    Con formación en psicoanálisis y una mirada integral de la salud mental, 
-    Nory Delano trabaja abordando temáticas como ansiedad, depresión, conflictos 
-    vinculares, procesos de duelo, crisis vitales y fortalecimiento de la autoestima. 
-    Su práctica se caracteriza por generar un espacio seguro, confidencial y libre 
-    de juicios, donde cada paciente pueda explorar su historia, comprender sus 
-    emociones y construir nuevas herramientas para su bienestar.
-  </p>
-
-  <p>
-    Comprometida con la ética profesional y el desarrollo continuo, Nory Delano 
-    entiende la psicoterapia como un proceso colaborativo, en el que terapeuta 
-    y paciente trabajan juntos para promover cambios significativos y duraderos.
-  </p>
-</section>
-                    <p class="description-text">
-                        Enfoque adaptado a las necesidades singulares de cada consultante,
-                        en un ambiente de respeto y confidencialidad.
-                    </p>
-                </div>
-            </div>
-        </div>
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const links = document.querySelectorAll('.menu-link');
+            // Highlighting active link based on scroll position!
             const sections = document.querySelectorAll('.content-section');
-            const qrCode = document.querySelector('.bottom-corner-qr');
-            // Toggle QR code size on click
-            if (qrCode) {
-                qrCode.addEventListener('click', () => {
-                    qrCode.classList.toggle('enlarged');
+            const navLinks = document.querySelectorAll('.menu-link');
+            const observerOptions = {
+                root: null,
+                rootMargin: '-50% 0px -50% 0px',
+                threshold: 0
+            };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        const activeLink = document.querySelector(`.menu-link[href="#${entry.target.id}"]`);
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
                 });
-            }
-            function showSection(targetId) {
-                // Hide all sections
-                sections.forEach(section => {
-                    section.classList.remove('active');
-                });
-                // Remove active class from all links
-                links.forEach(link => {
-                    link.classList.remove('active');
-                });
-                // Show target section
-                const targetSection = document.getElementById(targetId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                }
-                // Highlight active link
-                const activeLink = document.querySelector(`.menu-link[data-target="${targetId}"]`);
-                if (activeLink) {
-                    activeLink.classList.add('active');
-                }
-            }
-            links.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const targetId = link.getAttribute('data-target');
-                    showSection(targetId);
-                });
-            });
-            // Default: Show Terapia
-            showSection('terapia');
+            }, observerOptions);
+            sections.forEach(section => observer.observe(section));
         });
     </script>
 </body>
